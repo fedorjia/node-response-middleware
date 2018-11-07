@@ -31,14 +31,16 @@ exports.setupExceptionMiddlewares = function(app, {isUseLog = false, logUrl = nu
 	 */
 	app.use((err, req, res, ignore) => {
 		if (typeof err === "string") {
-			res.json({status: status.SERVICE_ERROR, body: err})
+			res.json({status: status.SERVICE_ERROR, body: null, message: err})
 		} else {
 			if (err.hasOwnProperty('status') && err.hasOwnProperty('body')) {
+				err.message = err.body;
+				err.body = null;
 				return res.json(err)
 			}
 
 			console.log(err)
-			res.json({status: status.INTERNAL_ERROR, body: 'internal error!'})
+			res.json({status: status.INTERNAL_ERROR, body: null, message: 'internal error!'})
 
 			// log error
 			if (isUseLog && logUrl) {
@@ -61,7 +63,7 @@ exports.setupExceptionMiddlewares = function(app, {isUseLog = false, logUrl = nu
 	})
 
 	app.use((req, res, ignore) => {
-		res.json({status: status.REQUEST_NOT_FOUND, body: 'request not found!'})
+		res.json({status: status.REQUEST_NOT_FOUND, body: null, message: 'request not found!'})
 	})
 }
 
@@ -103,16 +105,16 @@ exports.responseMiddleware = function({isUseLog = false, logUrl = null, extra = 
 				}
 			}
 
-			return res.json({ status: status.SUCCESS, body: data })
+			return res.json({ status: status.SUCCESS, body: data, message: '' })
 		}
 
 		res.failure = (err) => {
 			if(typeof err === "string") {
-				res.json({ status: status.SERVICE_ERROR, body:  err.toString() })
+				res.json({ status: status.SERVICE_ERROR, body: null, message:  err.toString() })
 			} else if(err instanceof ValidateError) {
-				res.json({ status: status.REQUEST_ERROR, body:  err.errors[0].msg })
+				res.json({ status: status.REQUEST_ERROR, body: null, message:  err.errors[0].msg })
 			} else {
-				res.json({ status: status.SERVICE_ERROR, body: err.message })
+				res.json({ status: status.SERVICE_ERROR, body: null, message: err.message })
 			}
 		}
 
