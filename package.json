@@ -1,6 +1,6 @@
 {
   "name": "node-response-middleware",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "node response middleware",
   "main": "src/index.js",
   "repository": {
@@ -10,9 +10,6 @@
   "keywords": [],
   "author": "Fedor",
   "license": "ISC",
-  "homepage": "",
   "devDependencies": {},
-  "dependencies": {
-    "axios": "^0.18.0"
-  }
+  "dependencies": {}
 }
