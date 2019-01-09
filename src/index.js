@@ -21,8 +21,8 @@ exports.setupExceptionMiddlewares = function(app) {
 		if (typeof err === "string") {
 			res.json({status: status.SERVICE_ERROR, body: null, message: err})
 		} else {
-			if (err.hasOwnProperty('status') && err.hasOwnProperty('body')) {
-				err.message = err.body;
+			if (err.hasOwnProperty('status') && err.hasOwnProperty('message')) {
+				// err.message = err.message;
 				err.body = null;
 				return res.json(err)
 			}

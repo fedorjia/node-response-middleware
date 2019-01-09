@@ -1,6 +1,6 @@
 {
   "name": "node-response-middleware",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "node response middleware",
   "main": "src/index.js",
   "repository": {
