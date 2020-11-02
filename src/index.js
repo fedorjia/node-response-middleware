@@ -1,5 +1,5 @@
 let status = require('./response-status')
-const ValidateError = require('./validate-error')
+// const ValidateError = require('./validate-error')
 
 /**
  * response status
@@ -48,7 +48,7 @@ exports.responseMiddleware = async (req, res, next) => {
 	res.failure = (err) => {
 		if(typeof err === "string") {
 			res.json({ status: status.SERVICE_ERROR, body: null, message:  err.toString() })
-		} else if(err instanceof ValidateError) {
+		} else if (err.name === 'validate') {
 			res.json({ status: status.REQUEST_ERROR, body: null, message:  err.errors[0].msg })
 		} else {
 			res.json({ status: status.SERVICE_ERROR, body: null, message: err.message })
